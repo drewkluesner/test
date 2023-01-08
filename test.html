@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Example 18</title>
+    
+    <style>
+	body {
+		margin: 40px;
+	}
+
+	.box {
+		background-color: #444;
+		color: #fff;
+		border-radius: 5px;
+		padding: 10px;
+		font-size: 100%;
+	}
+
+	.TeleOpMode {
+		background-color: #FF00FF		;
+		color: #fff;
+		border-radius: 5px;
+		padding: 10px;
+		font-size: 100%;
+	}
+
+
+	.RP {
+		width: 600px;
+		display: grid;
+    grid-gap: 10px;
+		grid-template-columns: repeat(9, 75px);
+		grid-template-rows: 50px 50px ;
+		grid-auto-flow: column;
+	}
+
+	.PointTotals {
+		width: 600px;
+		display: grid;
+    grid-gap: 10px;
+		grid-template-columns: repeat(9, 75px);
+		grid-template-rows: 50px 50px ;
+		grid-auto-flow: column;
+	}
+
+	.MatchMeta {
+		width: 600px;
+		display: grid;
+    grid-gap: 10px;
+		grid-template-columns: repeat(9, 75px);
+		grid-template-rows: 50px 50px ;
+		grid-auto-flow: column;
+	}
+
+	.Movement {
+		width: 600px;
+		display: grid;
+    grid-gap: 10px;
+		grid-template-columns: repeat(10, 75px);
+		grid-template-rows: 25px 25px ;
+		grid-auto-flow: column;
+	}
+
+	.Movement2 {
+		width: 600px;
+		display: grid;
+    grid-gap: 10px;
+		grid-template-columns: repeat(10, 75px);
+		grid-template-rows: 25px 25px ;
+		grid-auto-flow: column;
+	}
+
+	.Mode {
+		width: 600px;
+		display: grid;
+    grid-gap: 10px;
+		grid-template-columns: repeat(10, 75px);
+		grid-template-rows: 25px 25px ;
+		grid-auto-flow: row;
+	}
+
+
+
+	.wrapper {
+		width: 600px;
+		display: grid;
+    grid-gap: 10px;
+		grid-template-columns: repeat(10, 75px);
+		grid-template-rows: 100px 100px 100px 20px ;
+		grid-auto-flow: column;
+	}
+
+
+   </style>
+</head>
+
+ <body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+
+function updateTotal()
+{
+	var sum = 0.0;
+	$('.box').each(function()
+	{
+		sum += parseFloat($(this).text());
+	});
+	document.getElementById('TeamPoints').innerHTML =sum;
+
+}
+
+function updateRP()
+{
+	if (document.getElementById('AllianceOPoints').innerHTML > document.getElementById('AllianceDPoints').innerHTML)
+		document.getElementById('AllianceWinRP').innerHTML = 2;
+	else if (document.getElementById('AllianceOPoints').innerHTML == document.getElementById('AllianceDPoints').innerHTML)
+		document.getElementById('AllianceWinRP').innerHTML = 1;
+	else
+		document.getElementById('AllianceWinRP').innerHTML = 0;
+	
+	if (document.getElementById('CoOp').innerHTML == "YES")
+		if (document.getElementById('AllianceLinks').innerHTML >=4)
+			document.getElementById('LinkRP').innerHTML = 1;
+		else
+			document.getElementById('LinkRP').innerHTML = 0;
+	else
+		if (document.getElementById('AllianceLinks').innerHTML >5)
+			document.getElementById('LinkRP').innerHTML = 1;
+		else
+			document.getElementById('LinkRP').innerHTML = 0;
+
+    if (document.getElementById('AllianceChargeStation').innerHTML >26) 
+		document.getElementById('ChargeRP').innerHTML = 1;
+	else
+		document.getElementById('ChargeRP').innerHTML = 0;
+	
+	var sum = 0.0;
+	$('.rpvalue').each(function()
+	{
+		sum += parseFloat($(this).text());
+	});
+	document.getElementById('TotalRP').innerHTML =sum;
+
+}
+
+
+
+function myfunction(id) { 
+
+	let Val = 0;	
+	
+	if (document.getElementById('ModeID').innerHTML == "Auto")
+	{
+		if (id.match(/Top/))
+		{
+			Val = 6;
+		}
+		else if (id.match(/Mid/))
+		{
+			Val = 4;
+		}
+		else if (id.match(/Low/))
+		{
+			Val = 3;
+		}
+		else
+		{
+			Val = 0;
+		}
+	}
+	else if (document.getElementById('ModeID').innerHTML == "Tele")
+	{
+		if (id.match(/Top/))
+		{
+			Val = 5;
+		}
+		else if (id.match(/Mid/))
+		{
+			Val = 3;
+		}
+		else if (id.match(/Low/))
+		{
+			Val = 2;
+		}
+		else
+		{
+			Val = 0;
+		}			
+	}
+    document.getElementById(id).innerHTML = Val;
+	updateRP();
+	updateTotal();
+ } 
+ 
+function ChangeItem(id) { 
+    if (document.getElementById(id).innerHTML == "C")
+	   document.getElementById(id).innerHTML = "B"
+	else
+	   document.getElementById(id).innerHTML  = "C"
+ } 
+ 
+ 
+function ChangeMode(id) {
+    if (document.getElementById(id).innerHTML == "Auto")
+	   document.getElementById(id).innerHTML = "Tele"
+	else
+	   document.getElementById(id).innerHTML  = "Auto"
+
+ } 
+
+function ToggleYesNo(id) {
+	
+    if (document.getElementById(id).innerHTML == "YES")
+	   document.getElementById(id).innerHTML = "NO"
+	else
+	   document.getElementById(id).innerHTML  = "YES"
+	
+	
+	if(document.getElementById('AutoMove').innerHTML == "YES")
+		document.getElementById('AutoMovePts').innerHTML =3
+	else
+		document.getElementById('AutoMovePts').innerHTML =0
+	
+	if(document.getElementById('AutoDoc').innerHTML == "YES")
+		if (document.getElementById('AutoEngaged').innerHTML == "YES")
+			document.getElementById('AutoDocEngPts').innerHTML = 12
+		else
+			document.getElementById('AutoDocEngPts').innerHTML = 8
+	else
+		document.getElementById('AutoDocEngPts').innerHTML = 0
+
+	if(document.getElementById('EndGameDocked').innerHTML == "YES")
+		if (document.getElementById('EndGameEngaged').innerHTML == "YES")
+			document.getElementById('EndGameEngPts').innerHTML = 10
+		else
+			document.getElementById('EndGameEngPts').innerHTML = 6
+	else if (document.getElementById('EndGameParked').innerHTML == "YES")
+			document.getElementById('EndGameEngPts').innerHTML = 2
+
+	updateRP();
+	updateTotal()
+ } 
+ 
+function ChangePrompt(id) {
+
+	let value = ""
+	let promptVal = ""
+ 	if (id.match(/Team/))
+	{
+		value = "Team ID"
+		promptVal = "7531"
+	}	
+	else if (id.match(/Scout/))
+	{
+		value = "Scout Name"
+		promptVal = "Enter Name Here"
+	}
+	else
+	{
+		value = ""
+		promptVal = ""
+	}
+	 
+	blah = prompt('What is your ' + value + '?', promptVal );
+	document.getElementById(id).innerHTML  = blah
+	
+	updateRP();
+	updateTotal()
+ } 
+
+function reset(){
+	document.getElementById('col1Top').innerHTML = 0;
+	document.getElementById('col1Mid').innerHTML = 0;
+	document.getElementById('col1Low').innerHTML = 0;
+	document.getElementById('col2Top').innerHTML = 0;
+	document.getElementById('col2Mid').innerHTML = 0;
+	document.getElementById('col2Low').innerHTML = 0;	
+	document.getElementById('col3Top').innerHTML = 0;
+	document.getElementById('col3Mid').innerHTML = 0;
+	document.getElementById('col3Low').innerHTML = 0;	
+	
+	document.getElementById('col4Top').innerHTML = 0;
+	document.getElementById('col4Mid').innerHTML = 0;
+	document.getElementById('col4Low').innerHTML = 0;
+	document.getElementById('col5Top').innerHTML = 0;
+	document.getElementById('col5Mid').innerHTML = 0;
+	document.getElementById('col5Low').innerHTML = 0;	
+	document.getElementById('col6Top').innerHTML = 0;
+	document.getElementById('col6Mid').innerHTML = 0;
+	document.getElementById('col6Low').innerHTML = 0;
+	
+	document.getElementById('col7Top').innerHTML = 0;
+	document.getElementById('col7Mid').innerHTML = 0;
+	document.getElementById('col7Low').innerHTML = 0;
+	document.getElementById('col8Top').innerHTML = 0;
+	document.getElementById('col8Mid').innerHTML = 0;
+	document.getElementById('col8Low').innerHTML = 0;	
+	document.getElementById('col9Top').innerHTML = 0;
+	document.getElementById('col9Mid').innerHTML = 0;
+	document.getElementById('col9Low').innerHTML = 0;
+	
+	document.getElementById('MobilityType').innerHTML = 0;
+	
+	
+	updateTotal()
+} 
+ 
+</script>
+
+	 
+	 <h3>MatchData</h3>
+	 
+	 
+	 <div class="MatchMeta">
+		<div class="label" id="MatchIDLabel">MatchID</div>
+		<div class="value" id="MatchID">1</div>
+		<div class="label" id="ScoutIDLabel">ScoutName</div>
+		<div class="value" id="ScoutID" onclick='ChangePrompt(this.id)'>Drew</div>		
+
+		<div class="label" id="TeamIDLabel">TeamID</div>
+		<div class="value" id="TeamID" onclick='ChangePrompt(this.id)'>7531</div>
+		<div class="label" id="ConeLabel">Pick Up Cone</div>
+		<div class="value" id="Cone" onclick='ToggleYesNo(this.id)'>NO</div>
+		<div class="label" id="BlockLabel">Pick Up Block</div>
+		<div class="value" id="Block" onclick='ToggleYesNo(this.id)'>NO</div>
+		<div class="label" id="FumbleLabel">Fumble</div>
+		<div class="value" id="FumbleType" onclick='ToggleYesNo(this.id)'>NO</div>	
+		<div class="label" id="CoOpLabel">3 GP per Grid</div>
+		<div class="value" id="CoOp" onclick='ToggleYesNo(this.id)'>NO</div>	
+		
+	</div>
+
+	 <br>
+	 <br>
+	 <h3>Autonomous Movement</h3>
+	 <div class="Movement">		
+		<div class="label" id="AutoMoveLabel">Auto: Did it Move?</div>
+		<div class="label" id="AutoMove" onclick='ToggleYesNo(this.id)'>NO</div>
+		
+		<div class="label" id="AutoMovePtsLabel">Auto Move Pts</div>		
+		<div class="box" id="AutoMovePts">0</div>
+
+		<div class="label" id="AutoDocLabel">Auto: Docked?</div>
+		<div class="label" id="AutoDoc" onclick='ToggleYesNo(this.id)'>NO</div>
+		
+		<div class="label" id="AutoEngagedLabel">Auto: Engaged?</div>
+		<div class="label" id="AutoEngaged" onclick='ToggleYesNo(this.id)'>NO</div>
+		
+		<div class="label" id="AutoDocEngPtsLabel">Auto Dock Pts</div>		
+		<div class="box" id="AutoDocEngPts">0</div>
+	</div>
+	<br>
+	<br>
+	
+	<h3>EndGame Movements</h3>
+	<div class="Movement2">
+		<div class="label" id="EndGameDockedLabel">EndGame: Docked?</div>
+		<div class="label" id="EndGameDocked" onclick='ToggleYesNo(this.id)'>NO</div>
+		
+		<div class="label" id="EndGameEngagedLabel">EndGame: Engaged?</div>
+		<div class="label" id="EndGameEngaged" onclick='ToggleYesNo(this.id)'>NO</div>
+		
+		<div class="label" id="EndGameParkedLabel">EndGame: Parked?</div>
+		<div class="label" id="EndGameParked" onclick='ToggleYesNo(this.id)'>NO</div>
+		
+		<div class="label" id="EndGameEngPtsLabel">EndGame Pts</div>		
+		<div class="box" id="EndGameEngPts">0</div>		
+		
+	 </div>
+	 
+	 <br>
+	 <br>
+	 
+	 <h3>GameGrid</h3>
+	 
+	 <div class="Mode">
+		 <div class="label" id="ModeIDLabel:">Current Mode</div>
+		 <div class="TeleOpMode" id="ModeID" onclick='ChangeMode(this.id)' >Auto</div>
+	 </div> 
+	 <div class="wrapper">
+	 	<div class="label" id="col0Top" >Top</div>
+	 	<div class="label" id="col1Mid" >Mid</div>
+	 	<div class="label" id="col1Low" >Low</div>
+		<div class="label" id="col1Label" ></div>
+		
+	 	<div class="box" id="col1Top" onclick='myfunction(this.id)'>0</div>
+	 	<div class="box" id="col1Mid" onclick='myfunction(this.id)'>0</div>
+	 	<div class="box" id="col1Low" onclick='myfunction(this.id)'>0</div>
+		<div class="label" id="col1Label" >Col1</div>
+	 	<div class="box" id="col2Top" onclick='myfunction(this.id)'>0</div>
+	 	<div class="box" id="col2Mid" onclick='myfunction(this.id)'>0</div>
+	 	<div class="box" id="col2Low" onclick='myfunction(this.id)'>0</div>
+		<div class="label" id="col2Label" >Col2</div>
+	 	<div class="box" id="col3Top" onclick='myfunction(this.id)'>0</div>
+	 	<div class="box" id="col3Mid" onclick='myfunction(this.id)'>0</div>
+	 	<div class="box" id="col3Low" onclick='myfunction(this.id)'>0</div>
+		<div class="label" id="col3Label" >Col3</div>
+	 	<div class="box" id="col4Top" onclick='myfunction(this.id)'>0</div>
+	 	<div class="box" id="col4Mid" onclick='myfunction(this.id)'>0</div>
+	 	<div class="box" id="col4Low" onclick='myfunction(this.id)'>0</div>
+		<div class="label" id="col4Label" >Col4</div>
+	 	<div class="box" id="col5Top" onclick='myfunction(this.id)'>0</div>
+	 	<div class="box" id="col5Mid" onclick='myfunction(this.id)'>0</div>
+	 	<div class="box" id="col5Low" onclick='myfunction(this.id)'>0</div>
+		<div class="label" id="col5Label" >Col5</div>
+	 	<div class="box" id="col6Top" onclick='myfunction(this.id)'>0</div>
+	 	<div class="box" id="col6Mid" onclick='myfunction(this.id)'>0</div>
+	 	<div class="box" id="col6Low" onclick='myfunction(this.id)'>0</div>
+		<div class="label" id="col6Label" >Col6</div>	
+	 	<div class="box" id="col7Top" onclick='myfunction(this.id)'>0</div>
+	 	<div class="box" id="col7Mid" onclick='myfunction(this.id)'>0</div>
+	 	<div class="box" id="col7Low" onclick='myfunction(this.id)'>0</div>
+		<div class="label" id="col7Label" >Col7</div>
+	 	<div class="box" id="col8Top" onclick='myfunction(this.id)'>0</div>
+	 	<div class="box" id="col8Mid" onclick='myfunction(this.id)'>0</div>
+	 	<div class="box" id="col8Low" onclick='myfunction(this.id)'>0</div>
+		<div class="label" id="col8Label" >Col8</div>		
+	 	<div class="box" id="col9Top" onclick='myfunction(this.id)'>0</div>
+	 	<div class="box" id="col9Mid" onclick='myfunction(this.id)'>0</div>
+	 	<div class="box" id="col9Low" onclick='myfunction(this.id)'>0</div>
+		<div class="label" id="col9Label" >Col9</div>
+	</div>
+
+	<br>
+	<h3> Point Totals</h3>
+	<div class ="PointTotals">
+		
+		<div class="label" id="TeamPointsLabel">Team Points</div>
+		<div class="value" id="TeamPoints" >0</div>
+		
+		<div class="label" id="AllianceOffenseLabel">Allicance Points</div>
+		<div class="value" id="AllianceOPoints" onclick='ChangePrompt(this.id)' >0</div>
+		<div class="label" id="AllianceDLabel">Opponent Points</div>
+		<div class="value" id="AllianceDPoints" onclick='ChangePrompt(this.id)' >0</div>
+		
+		<div class="label" id="AllianceLinksLabel">Team Links</div>
+		<div class="value" id="AllianceLinks" onclick='ChangePrompt(this.id)' >0</div>
+				
+		<div class="label" id="AllianceChargeStationLabel">Team Total ChargePts</div>
+		<div class="value" id="AllianceChargeStation" onclick='ChangePrompt(this.id)'>0</div>						
+	 </div>
+
+	<br>
+	<h3> Ranking Points</h3>
+
+	<div class="RP">
+		<div class="label" id="AllianceWinRPLabel">OutcomeRP</div>
+		<div class="rpvalue" id="AllianceWinRP" >0</div>
+		<div class="label" id="LinkRPLabel">LinkRP</div>
+		<div class="rpvalue" id="LinkRP" >0</div>
+		<div class="label" id="ChargeRPLabel">ChargeRP</div>
+		<div class="rpvalue" id="ChargeRP" >0</div>
+		<div class="label" id="TotalLabel">TotalRP</div>
+		<div class="value" id="TotalRP" >0</div>
+		
+	</div>	
+
+
+	<div class="button"><button id="reset" name="reset" onclick="reset()">RESET ME</button></div>
+
+</body></html>
